@@ -25,7 +25,7 @@ set.seed(1)
 # -----------------------------------------------------------------------------
 
 # --- Load and prepare data ---------------------------------------------------
-data.prostate <- read.csv("prostate.csv") %>%
+data.prostate <- read.csv("https://raw.githubusercontent.com/Decision-Academy/Intro-to-Biostatistics-with-Justin-Belair/refs/heads/main/data/prostate.csv") %>%
   mutate(death = str_trim(str_extract(status, "^[^-]*")),
          death = ifelse(death == "dead", 1, 0))
 
