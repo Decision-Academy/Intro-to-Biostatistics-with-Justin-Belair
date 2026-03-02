@@ -1,0 +1,88 @@
+---
+title: "Introduction to Biostatistics - Learn Statistics the Right Way!"
+subtitle: "Descriptive Statistics"
+author: Justin Belair | Statistical Consultant | Author of Causal Inference in Statistics
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    colortheme: "default"
+    fonttheme: "structurebold"
+    highlight: "tango"
+    incremental: true
+    fig_width: 7
+    fig_height: 5
+    fig_caption: true
+    df_print: "kable"
+    latex_engine: "xelatex"
+    #keep_tex: true
+    slide_level: 2
+aspectratio: "169"
+classoption: "professionalfonts"
+header-includes:
+  - \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, pdfnewwindow=true}
+  - \definecolor{dark_blue}{RGB}{29,42,59}
+  - \definecolor{light_blue}{RGB}{227,237,255}
+  - \setbeamercolor{frametitle}{bg=dark_blue, fg=light_blue}
+  - \setbeamercolor{title}{fg=dark_blue}
+  - \setbeamercolor{structure}{fg=dark_blue}
+  - \usepackage{tikz}
+  - \addtobeamertemplate{footline}{}{
+      \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=south west,yshift=-22pt,xshift=-5pt] at (current page.south west) {
+        \href{https://justinbelair.ca/?utm_source=intro_biostats&utm_medium=slides&utm_campaign=logo_click}{\includegraphics[height=2.5cm]{C:/Users/justi/Documents/JBConsulting/Fiverr/Logo/JB_Statistical_Consulting_no_calligraphy_black.png}}
+      };
+      \end{tikzpicture}
+    }
+---
+
+## Describing Distributions With Summary Statistics - The Standard-Deviation 
+### Coding Example
+
+- Let's compute the variance and the standard deviation of the second salary data set in `R` and Python.
+
+```{r}
+salary2 <- c(1000, 2000, 3000, 4000, 5000)
+
+var(salary2)
+
+sd(salary2)
+
+#showing that using sd() computes the square-root, sqrt(), of var()
+sqrt(var(salary2))
+```
+
+
+```{python}
+import numpy as np
+
+salary2 = [1000, 2000, 3000, 4000, 5000]
+
+print(np.var(salary2, ddof=1))
+print(np.std(salary2, ddof=1))
+# showing that using std() computes the square-root, sqrt(), of var()
+print(np.sqrt(np.var(salary2, ddof=1)))
+```
+
+- This confirms our previous result
+
+## The Standard-Deviation and Variance Denominators in R and Python
+
+- A side-note : the `var()` function in `R` uses the unbiased formula with $n-1$ as the denominator
+- You can read the *function documentation* by running `?var`.
+- In the file that opens up, you can read:
+  - "The denominator $n - 1$ is used which gives an unbiased estimator of the (co)variance for i.i.d. observations."
+- In Python `numpy`, the default behavior uses `ddof=0`, meaning the denominator is `n` (biased estimator)
+- To get the unbiased estimator like R's `var()`, you must explicitly set `ddof=1`
+- Example: `np.var(data, ddof=1)` uses `n-1` as denominator
+
+## Contact Information and other clickable stuff
+
+\small
+- [**My Personal Website**](https://justinbelair.ca?utm_source=intro_biostats&utm_medium=slides_var_std_coding_example&utm_campaign=contact_info)
+- If you are interested in Consulting, Training, Workshops, Public Speaking, Guest Lectures, and Other Custom Services in statistics and causal inference, please do not hesitate to contact me **belairjustin@gmail.com**
+- The first chapter of my book, *Causal Inference in Statistics*, is available for free on my website by [**clicking here**](https://justinbelair.ca/causal-inference-in-statistics-book/?utm_source=intro_biostats&utm_medium=slides_var_std_coding_example&utm_campaign=contact_info)
+- I share a montly newsletter to stats nerds, causal inference enthusiasts, and data scientists, [**subscribe here**](https://causal-inference-in-statistics.beehiiv.com/subscribe?utm_source=intro_biostats&utm_medium=slides_var_std_coding_example&utm_campaign=contact_info)
+- I founded [**biostatistics.ca**](https://www.biostatistics.ca/?utm_source=intro_biostats&utm_medium=slides_var_std_coding_example&utm_campaign=contact_info), a blog and biostatistics community.
+- I share content daily on [**Linkedin**](https://www.linkedin.com/in/justinbelair/)
+- I created a [**Linkedin Causal Inference Group**](https://www.linkedin.com/groups/13065272/) with [**Aleksander** Molak](https://www.linkedin.com/in/aleksandermolak/)
+- I created a [**Causal Inference Discord Community**](https://discord.com/invite/2xKvHMhYDg) which is free to join

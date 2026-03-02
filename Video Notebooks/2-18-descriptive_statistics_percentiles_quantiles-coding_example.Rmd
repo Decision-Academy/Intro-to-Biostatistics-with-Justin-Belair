@@ -1,0 +1,94 @@
+---
+title: "Introduction to Biostatistics - Learn Statistics the Right Way!"
+subtitle: "Descriptive Statistics"
+author: Justin Belair | Statistical Consultant | Author of Causal Inference in Statistics
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    colortheme: "default"
+    fonttheme: "structurebold"
+    highlight: "tango"
+    incremental: true
+    fig_width: 7
+    fig_height: 5
+    fig_caption: true
+    df_print: "kable"
+    latex_engine: "xelatex"
+    #keep_tex: true
+    slide_level: 2
+aspectratio: "169"
+classoption: "professionalfonts"
+header-includes:
+  - \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, pdfnewwindow=true}
+  - \definecolor{dark_blue}{RGB}{29,42,59}
+  - \definecolor{light_blue}{RGB}{227,237,255}
+  - \setbeamercolor{frametitle}{bg=dark_blue, fg=light_blue}
+  - \setbeamercolor{title}{fg=dark_blue}
+  - \setbeamercolor{structure}{fg=dark_blue}
+  - \usepackage{tikz}
+  - \addtobeamertemplate{footline}{}{
+      \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=south west,yshift=-22pt,xshift=-5pt] at (current page.south west) {
+        \href{https://justinbelair.ca/?utm_source=intro_biostats&utm_medium=slides&utm_campaign=logo_click}{\includegraphics[height=2.5cm]{C:/Users/justi/Documents/JBConsulting/Fiverr/Logo/JB_Statistical_Consulting_no_calligraphy_black.png}}
+      };
+      \end{tikzpicture}
+    }
+---
+
+## Describing Distribution With Summary Statistics - Percentiles and Quantiles
+
+- In `R`, the `quantile()` function is used to compute percentiles
+
+```{r}
+salary <- c(1000, 2000, 3000, 4000, 5000)
+quantile(salary, probs = c(0, 0.01, 0.02, 0.03, 0.25, 0.5, 0.95))
+```
+
+```{python}
+import numpy as np
+
+salary = [1000, 2000, 3000, 4000, 5000]
+probs = [0, 0.01, 0.02, 0.03, 0.25, 0.5, 0.95]
+quantiles = np.percentile(salary, [p * 100 for p in probs])
+print(quantiles)
+```
+
+- Let's look at the documentation by running `?quantile`
+
+## Describing Distribution With Summary Statistics - Percentiles and Quantiles
+
+- Let's try other types of quantiles
+
+```{r}
+salary <- c(1000, 2000, 3000, 4000, 5000)
+quantile(salary, probs = c(0, 0.01, 0.02, 0.03, 0.25, 0.5, 0.95), type =  6)
+
+quantile(salary, probs = c(0, 0.01, 0.02, 0.03, 0.25, 0.5, 0.95), type =  8)
+```
+
+```{python}
+import numpy as np
+
+salary = [1000, 2000, 3000, 4000, 5000]
+probs = [0, 0.01, 0.02, 0.03, 0.25, 0.5, 0.95]
+
+# R's type=6 corresponds to numpy's method='inverted_cdf'
+quantiles_type6 = np.percentile(salary, [p * 100 for p in probs], method='inverted_cdf')
+print(quantiles_type6)
+
+# R's type=8 corresponds to numpy's method='median_unbiased' (default)
+quantiles_type8 = np.percentile(salary, [p * 100 for p in probs], method='median_unbiased')
+print(quantiles_type8)
+```
+
+## Contact Information and other clickable stuff
+
+\small
+- [**My Personal Website**](https://justinbelair.ca?utm_source=intro_biostats&utm_medium=slides_percentiles_quantiles_coding&utm_campaign=contact_info)
+- If you are interested in Consulting, Training, Workshops, Public Speaking, Guest Lectures, and Other Custom Services in statistics and causal inference, please do not hesitate to contact me **belairjustin@gmail.com**
+- The first chapter of my book, *Causal Inference in Statistics*, is available for free on my website by [**clicking here**](https://justinbelair.ca/causal-inference-in-statistics-book/?utm_source=intro_biostats&utm_medium=slides_percentiles_quantiles_coding&utm_campaign=contact_info)
+- I share a montly newsletter to stats nerds, causal inference enthusiasts, and data scientists, [**subscribe here**](https://causal-inference-in-statistics.beehiiv.com/subscribe?utm_source=intro_biostats&utm_medium=slides_percentiles_quantiles_coding&utm_campaign=contact_info)
+- I founded [**biostatistics.ca**](https://www.biostatistics.ca/?utm_source=intro_biostats&utm_medium=slides_percentiles_quantiles_coding&utm_campaign=contact_info), a blog and biostatistics community.
+- I share content daily on [**Linkedin**](https://www.linkedin.com/in/justinbelair/)
+- I created a [**Linkedin Causal Inference Group**](https://www.linkedin.com/groups/13065272/) with [**Aleksander** Molak](https://www.linkedin.com/in/aleksandermolak/)
+- I created a [**Causal Inference Discord Community**](https://discord.com/invite/2xKvHMhYDg) which is free to join

@@ -1,0 +1,124 @@
+---
+title: "Introduction to Biostatistics - Learn Statistics the Right Way!"
+subtitle: "Modelling"
+author: Justin Belair | Statistical Consultant | Author of Causal Inference in Statistics
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    colortheme: "default"
+    fonttheme: "structurebold"
+    highlight: "tango"
+    #incremental: true
+    fig_width: 7
+    fig_height: 3
+    fig_caption: true
+    df_print: "kable"
+    latex_engine: "xelatex"
+    #keep_tex: true
+    slide_level: 2
+aspectratio: "169"
+classoption: "professionalfonts"
+header-includes:
+  - \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, pdfnewwindow=true}
+  - \definecolor{dark_blue}{RGB}{29,42,59}
+  - \definecolor{light_blue}{RGB}{227,237,255}
+  - \setbeamercolor{frametitle}{bg=dark_blue, fg=light_blue}
+  - \setbeamercolor{title}{fg=dark_blue}
+  - \setbeamercolor{structure}{fg=dark_blue}
+  - \usepackage{tikz}
+  - \addtobeamertemplate{footline}{}{
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south west,yshift=-22pt,xshift=-5pt] at (current page.south west) {
+          \includegraphics[height=2.5cm]{C:/Users/justi/Documents/JBConsulting/Fiverr/Logo/JB_Statistical_Consulting_no_calligraphy_black.png}
+        };
+      \end{tikzpicture}
+    }
+---
+
+```{r, echo=FALSE, warning = FALSE, message = FALSE}
+options(max.print = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+
+set.seed(1)
+```
+
+## Covariance and Correlation in the Diabetes Dataset
+- In a sample, we use the sample covariance and sample correlation to estimate the population covariance and correlation
+- The **sample covariance** is defined as:
+$$s_{XY} = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})$$
+- The **sample correlation** is defined as:
+$$r_{XY} = \frac{s_{X, Y}}{s_X s_Y} = \frac{\sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})}{(n-1)s_X s_Y}$$
+
+# Example with a Dataset
+## The Diabetes Dataset
+- We will study a dataset that contains information about patients with diabetes, including their age, cholesterol levels, and other health metrics
+- It is freely available at the [**Vanderbilt Biostatistics Datasets**](https://hbiostat.org/data/)
+- It was studied in 
+  - Willems JP, Saunders JT, DE Hunt, JB Schorling: Prevalence of coronary heart disease risk factors among rural blacks: A community-based study. Southern Medical Journal 90:814-820; 1997
+  - Schorling JB, Roach J, Siegel M, Baturka N, Hunt DE, Guterbock TM, Stewart HL: A trial of church-based smoking cessation interventions for rural African Americans. Preventive Medicine 26:92-101; 1997.
+- A [**data dictionary**](https://hbiostat.org/data/repo/cdiabetes) is available
+
+## Visualizing the Diabetes Dataset
+```{r, echo = FALSE}
+data <- read.csv("diabetes.csv")
+```
+
+- A **scatter plot** is a type of plot that shows the relationship between two continuous variables
+```{r, echo = FALSE}
+chol.age.plot <- data %>%
+  ggplot(aes(x = age, y = chol)) +
+  geom_point() +
+  labs(title = "Scatter Plot of Cholesterol vs Age",
+       x = "Age (years)",
+       y = "Cholesterol (mg/dL)") +
+  theme_minimal()
+
+chol.age.plot
+```
+
+## Covariance and Correlation in Sample Data - R
+
+```{r, echo = FALSE}
+data.complete <- data[complete.cases(data$chol) & complete.cases(data$age),]
+```
+
+\small
+```{r}
+var(data.complete$chol, data.complete$age)
+cor(data.complete$chol, data.complete$age)
+
+var(data.complete$chol, data.complete$age)/ 
+  (sd(data.complete$chol) * sd(data.complete$age))
+```
+
+## Covariance and Correlation in Sample Data - Python
+```{python,echo=FALSE}
+import pandas as pd
+data = pd.read_csv("diabetes.csv")
+data_complete = data[['chol', 'age']].dropna()
+```
+
+\small
+```{python}
+covariance = data_complete['chol'].cov(data_complete['age'])
+correlation = data_complete['chol'].corr(data_complete['age'])
+print("Covariance:", covariance)
+print("Correlation:", correlation)
+
+calculated_correlation = covariance / (data_complete['chol'].std() * data_complete['age'].std())
+print("Calculated Correlation:", calculated_correlation)
+```
+## Contact Information and other clickable stuff
+
+\small
+- [**My Personal Website**](https://justinbelair.ca?utm_source=intro_biostats&utm_medium=slides_covariance_correlation_data&utm_campaign=contact_info)
+- If you are interested in Consulting, Training, Workshops, Public Speaking, Guest Lectures, and Other Custom Services in statistics and causal inference, please do not hesitate to contact me **belairjustin@gmail.com**
+- The first chapter of my book, *Causal Inference in Statistics*, is available for free on my website by [**clicking here**](https://justinbelair.ca/causal-inference-in-statistics-book/?utm_source=intro_biostats&utm_medium=slides_covariance_correlation_data&utm_campaign=contact_info)
+- I share a monthly newsletter to stats nerds, causal inference enthusiasts, and data scientists, [**subscribe here**](https://causal-inference-in-statistics.beehiiv.com/subscribe?utm_source=intro_biostats&utm_medium=slides_covariance_correlation_data&utm_campaign=contact_info)
+- I founded [**biostatistics.ca**](https://www.biostatistics.ca/?utm_source=intro_biostats&utm_medium=slides_covariance_correlation_data&utm_campaign=contact_info), a blog and biostatistics community.
+- I share content daily on [**Linkedin**](https://www.linkedin.com/in/justinbelair/)
+- I created a [**Linkedin Causal Inference Group**](https://www.linkedin.com/groups/13065272/) with [**Aleksander Molak**](https://www.linkedin.com/in/aleksandermolak/)
+- I created a [**Causal Inference Discord Community**](https://discord.com/invite/2xKvHMhYDg) which is free to join
+- If you would just like to chat about science, stats, causal inference, or any other topic, please send me a DM on Linkedin or reach out via **belairjustin@gmail.com**.

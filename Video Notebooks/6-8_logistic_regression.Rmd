@@ -1,0 +1,101 @@
+---
+title: "Introduction to Biostatistics - Learn Statistics the Right Way!"
+subtitle: "Modelling"
+author: Justin Belair | Statistical Consultant | Author of Causal Inference in Statistics
+output:
+  beamer_presentation:
+    theme: "metropolis"
+    colortheme: "default"
+    fonttheme: "structurebold"
+    highlight: "tango"
+    #incremental: true
+    fig_width: 7
+    fig_height: 3
+    fig_caption: true
+    df_print: "kable"
+    latex_engine: "xelatex"
+    #keep_tex: true
+    slide_level: 2
+aspectratio: "169"
+classoption: "professionalfonts"
+header-includes:
+  - \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, pdfnewwindow=true}
+  - \definecolor{dark_blue}{RGB}{29,42,59}
+  - \definecolor{light_blue}{RGB}{227,237,255}
+  - \setbeamercolor{frametitle}{bg=dark_blue, fg=light_blue}
+  - \setbeamercolor{title}{fg=dark_blue}
+  - \setbeamercolor{structure}{fg=dark_blue}
+  - \usepackage{tikz}
+  - \addtobeamertemplate{footline}{}{
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south west,yshift=-22pt,xshift=-5pt] at (current page.south west) {
+          \includegraphics[height=2.5cm]{C:/Users/justi/Documents/JBConsulting/Fiverr/Logo/JB_Statistical_Consulting_no_calligraphy_black.png}
+        };
+      \end{tikzpicture}
+    }
+---
+
+```{r, echo=FALSE, warning = FALSE, message = FALSE}
+options(max.print = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+library(stringr)
+
+set.seed(1)
+```
+
+## Logistic Regression - continued
+```{r, echo = FALSE}
+data.prostate <- read.csv("prostate.csv") %>%
+  mutate(death = str_trim(str_extract(status, "^[^-]*")),
+         death = ifelse(death == "dead", 1, 0))
+```
+- We will study the prostate data set from the Vanderbilt Biostatistics Library
+- It was studied in Byar DP, Green SB (1980): Bulletin Cancer, Paris 67:477-488
+- More information can be found [**here**](https://hbiostat.org/data/repo/prostate) and the data dictionary can be found [**here**](https://hbiostat.org/data/repo/cprostate)
+- I converted it to .csv before importing it to R, and cleaned up the `status` variable to obtain a binary variable `death` indicating whether the patient died or not
+
+## Logistic Regression - continued
+- We will model death as a function of age, weight, size of tumor, cancer stage, and patient fitness
+```{r}
+glm.logistic <- glm(death ~ age + wt + stage + rx, 
+                    data = data.prostate, family = binomial(link = "logit"))
+```
+## Logistic Regression - continued
+\tiny
+```{r, echo = FALSE}
+summary(glm.logistic)
+```
+
+## Logistic Regression
+- The coefficients are interpreted as the change in the *log-odds* of the outcome for a one-unit change in the predictor, holding all other predictors constant
+- We can also exponentiate the coefficients to obtain the *odds ratios*, which are easier to interpret
+\small
+```{r, echo = FALSE}
+exp(coef(glm.logistic)[-1]) %>% #we remove the intercept
+  round(3)
+```
+## Logistic Regression - continued
+- We cannot perform an ANOVA per se, since the model is not a linear model
+- We can use the `car` package to obtain an ANOVA-like table, based on an **analysis-of-deviance**, a slightly more complicated procedure that we will not discuss in detail
+```{r}
+car::Anova(glm.logistic)
+```
+
+## Logistic Regression - continued
+- Here we see that the main-effect of medication is very high and significant
+- Be careful with causal interpretations of this model
+
+## Contact Information and other clickable stuff
+
+\small
+- [**My Personal Website**](https://justinbelair.com?utm_source=intro_biostats&utm_medium=slides_logistic_regression&utm_campaign=contact_info)
+- If you are interested in Consulting, Training, Workshops, Public Speaking, Guest Lectures, and Other Custom Services in statistics and causal inference, please do not hesitate to contact me **belairjustin@gmail.com**
+- The first chapter of my book, *Causal Inference in Statistics*, is available for free on my website by [**clicking here**](https://justinbelair.ca/causal-inference-in-statistics-book/?utm_source=intro_biostats&utm_medium=slides_logistic_regression&utm_campaign=contact_info)
+- I share a monthly newsletter to stats nerds, causal inference enthusiasts, and data scientists, [**subscribe here**](https://causal-inference-in-statistics.beehiiv.com/subscribe?utm_source=intro_biostats&utm_medium=slides_logistic_regression&utm_campaign=contact_info)
+- I founded [**biostatistics.ca**](https://www.biostatistics.ca/?utm_source=intro_biostats&utm_medium=slides_logistic_regression&utm_campaign=contact_info), a blog and biostatistics community.
+- I share content daily on [**Linkedin**](https://www.linkedin.com/in/justinbelair/)
+- I created a [**Linkedin Causal Inference Group**](https://www.linkedin.com/groups/13065272/) with [**Aleksander Molak**](https://www.linkedin.com/in/aleksandermolak/)
+- I created a [**Causal Inference Discord Community**](https://discord.com/invite/2xKvHMhYDg) which is free to join
+- If you would just like to chat about science, stats, causal inference, or any other topic, please send me a DM on Linkedin or reach out via **belairjustin@gmail.com**.
